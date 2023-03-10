@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.11",
+    "@types/react-router-dom": "^5.3.3",
     "daisyui": "^2.51.3",
     "react": "^18.2.0",
     "react-daisyui": "^3.0.3",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.5",
+    "react-router-dom": "^6.8.2",
     "zod": "^3.21.4"
   },
   "devDependencies": {

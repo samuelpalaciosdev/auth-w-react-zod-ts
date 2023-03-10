@@ -1,10 +1,13 @@
 import SignUpForm, { SignUpAPI } from '../components/SignUpForm';
 import { useRef } from 'react';
 import { SignUpType } from '../types/auth';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const baseUrl = 'https://ecommerce-api-ts.cyclic.app/api';
   const authUrl = `${baseUrl}/auth`;
+
+  const navigate = useNavigate();
 
   const signUpFormRef = useRef<SignUpAPI>(null);
 
@@ -29,12 +32,16 @@ const SignUp = () => {
       // console.log('Error in register', resData.msg);
       signUpFormRef.current?.setErrors(resData.msg);
       return;
+    } else {
+      navigate('/login');
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
 
     // console.log(resData);
   };
   return (
     <>
+      <h1 className='text-3xl font-bold underline'>Hello world!</h1>
       <SignUpForm ref={signUpFormRef} onSubmit={register} />
     </>
   );
