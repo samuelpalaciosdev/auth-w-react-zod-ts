@@ -3,13 +3,17 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SignUpType, signUpSchema } from '../types/auth';
 import InputField from './InputField';
-import { forwardRef, useImperativeHandle } from 'react';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
 
 interface SignUpFormProps {
   onSubmit: (data: SignUpType) => void;
 }
 
-const SignUpForm = forwardRef(({ onSubmit }: SignUpFormProps, ref) => {
+export interface SignUpAPI {
+  setErrors: (msg: Record<string, string>) => void;
+}
+
+const SignUpForm = forwardRef<SignUpAPI, SignUpFormProps>(({ onSubmit }, ref) => {
   const {
     register,
     handleSubmit,
@@ -19,7 +23,8 @@ const SignUpForm = forwardRef(({ onSubmit }: SignUpFormProps, ref) => {
   } = useForm<SignUpType>({
     resolver: zodResolver(signUpSchema),
   });
-
+  const setErrorRef = useRef(setError);
+  setErrorRef.current = setError;
   useImperativeHandle(
     ref,
     () => {
@@ -31,9 +36,12 @@ const SignUpForm = forwardRef(({ onSubmit }: SignUpFormProps, ref) => {
           const message = msg.toString();
           const key = message.split(' ')[0].toLowerCase();
           console.log(message, key);
-          setError(key as 'name' | 'lastName' | 'email' | 'password' | 'confirmPassword' | 'role', {
-            message: message,
-          });
+          setErrorRef.current(
+            key as 'name' | 'lastName' | 'email' | 'password' | 'confirmPassword' | 'role',
+            {
+              message: message,
+            }
+          );
         },
       };
     },
