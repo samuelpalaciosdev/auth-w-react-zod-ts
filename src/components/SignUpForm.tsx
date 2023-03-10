@@ -3,22 +3,44 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SignUpType, signUpSchema } from '../types/auth';
 import InputField from './InputField';
+import { forwardRef, useImperativeHandle } from 'react';
 
 interface SignUpFormProps {
   onSubmit: (data: SignUpType) => void;
 }
 
-const SignUpForm = ({ onSubmit }: SignUpFormProps) => {
+const SignUpForm = forwardRef(({ onSubmit }: SignUpFormProps, ref) => {
   const {
     register,
     handleSubmit,
+    setError,
     watch,
     formState: { errors },
   } = useForm<SignUpType>({
     resolver: zodResolver(signUpSchema),
   });
 
-  // console.log(errors);
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        // setErrors: (msg: Record<string, string>) => {
+        //   console.log('setErrors', msg);
+        // },
+        setErrors: (msg: Record<string, string>) => {
+          const message = msg.toString();
+          const key = message.split(' ')[0].toLowerCase();
+          console.log(message, key);
+          setError(key as 'name' | 'lastName' | 'email' | 'password' | 'confirmPassword' | 'role', {
+            message: message,
+          });
+        },
+      };
+    },
+    []
+  );
+
+  console.log(errors);
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -67,5 +89,5 @@ const SignUpForm = ({ onSubmit }: SignUpFormProps) => {
       </form>
     </>
   );
-};
+});
 export default SignUpForm;
