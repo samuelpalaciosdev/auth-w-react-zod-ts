@@ -1,12 +1,12 @@
-import SignUpForm from '../components/SignUpForm';
+import SignUpForm, { SignUpAPI } from '../components/SignUpForm';
 import { useRef } from 'react';
 import { SignUpType } from '../types/auth';
 
 const SignUp = () => {
-  const baseUrl = 'https://gold-wide-eyed-sparrow.cyclic.app/';
-  const authUrl = `${baseUrl}/api/auth`;
+  const baseUrl = 'https://ecommerce-api-ts.cyclic.app/api';
+  const authUrl = `${baseUrl}/auth`;
 
-  const signUpFormRef = useRef(null);
+  const signUpFormRef = useRef<SignUpAPI>(null);
 
   const register = async (data: SignUpType) => {
     console.log('Handled submit yesss!!', data);
@@ -26,8 +26,9 @@ const SignUp = () => {
     const resData = await res.json();
 
     if (resData.status !== 'success') {
-      console.log('Error in register', resData.msg);
-      signUpFormRef.current.setErrors(resData.msg);
+      // console.log('Error in register', resData.msg);
+      signUpFormRef.current?.setErrors(resData.msg);
+      return;
     }
 
     console.log(resData);
