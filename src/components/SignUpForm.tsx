@@ -92,8 +92,8 @@ const SignUpForm = forwardRef<SignUpAPI, SignUpFormProps>(({ onSubmit }, ref) =>
         />
 
         <div className='submit-btn mt-4'>
-          <Button type='submit' color='primary'>
-            {isSubmitting ? 'Hold up' : ' Submit :)'}
+          <Button type='submit' color='accent' style={{ textTransform: 'initial' }}>
+            {isSubmitting ? 'Hold up' : 'Create account'}
           </Button>
         </div>
       </form>

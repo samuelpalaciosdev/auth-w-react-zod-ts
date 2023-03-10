@@ -14,7 +14,7 @@ const Dashboard = () => {
       <h1 className='text-3xl font-bold'>Dashboard :)</h1>
 
       <div className='submit-btn mt-4'>
-        <Button onClick={handleLogout} color='primary'>
+        <Button onClick={handleLogout} color='accent' style={{ textTransform: 'initial' }}>
           Logout
         </Button>
       </div>

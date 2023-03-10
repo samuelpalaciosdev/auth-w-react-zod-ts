@@ -72,8 +72,8 @@ const LoginForm = forwardRef<LoginAPI, LoginFormProps>(({ onSubmit }, ref) => {
           error={errors.password?.message as string}
         />
         <div className='submit-btn mt-4'>
-          <Button type='submit' color='primary'>
-            {isSubmitting ? 'Hold up' : ' Login :)'}
+          <Button type='submit' color='accent' style={{ textTransform: 'initial' }}>
+            {isSubmitting ? 'Hold up' : 'Sign in'}
           </Button>
         </div>
       </form>

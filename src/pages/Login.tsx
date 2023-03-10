@@ -14,7 +14,10 @@ const Login = () => {
 
   return (
     <>
-      <h1 className='text-3xl font-bold'>Login :D</h1>
+      <h1 className='text-3xl font-bold'>Welcome Back</h1>
+      <h1 className='text-2xl mt-2 mb-2'>
+        We're <span className='text-teal-400'>happy</span> to see you here :)
+      </h1>
       <LoginForm ref={loginFormRef} onSubmit={handleLogin} />
     </>
   );
