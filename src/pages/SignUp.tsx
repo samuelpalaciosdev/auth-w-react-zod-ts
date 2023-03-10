@@ -9,7 +9,7 @@ const SignUp = () => {
   const signUpFormRef = useRef<SignUpAPI>(null);
 
   const register = async (data: SignUpType) => {
-    console.log('Handled submit yesss!!', data);
+    // console.log('Handled submit yesss!!', data);
     const res = await fetch(`${authUrl}/register`, {
       method: 'POST',
       headers: {
@@ -31,7 +31,7 @@ const SignUp = () => {
       return;
     }
 
-    console.log(resData);
+    // console.log(resData);
   };
   return (
     <>

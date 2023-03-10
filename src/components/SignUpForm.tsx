@@ -6,7 +6,7 @@ import InputField from './InputField';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 
 interface SignUpFormProps {
-  onSubmit: (data: SignUpType) => void;
+  onSubmit: (data: SignUpType) => Promise<void>;
 }
 
 export interface SignUpAPI {
@@ -19,7 +19,7 @@ const SignUpForm = forwardRef<SignUpAPI, SignUpFormProps>(({ onSubmit }, ref) =>
     handleSubmit,
     setError,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<SignUpType>({
     resolver: zodResolver(signUpSchema),
   });
@@ -48,7 +48,7 @@ const SignUpForm = forwardRef<SignUpAPI, SignUpFormProps>(({ onSubmit }, ref) =>
     []
   );
 
-  console.log(errors);
+  // console.log(errors);
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -92,7 +92,9 @@ const SignUpForm = forwardRef<SignUpAPI, SignUpFormProps>(({ onSubmit }, ref) =>
         />
 
         <div className='submit-btn'>
-          <Button type='submit'>Submit :)</Button>
+          <Button type='submit' color='primary'>
+            {isSubmitting ? 'Hold up' : ' Submit :)'}
+          </Button>
         </div>
       </form>
     </>
