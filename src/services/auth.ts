@@ -1,6 +1,7 @@
 import { LoginAPI } from '../components/LoginForm';
 import { SignUpAPI } from '../components/SignUpForm';
 import { LoginType, SignUpType } from '../types/auth';
+import { toast } from 'react-toastify';
 
 const baseUrl = 'https://ecommerce-api-ts.cyclic.app/api';
 const authUrl = `${baseUrl}/auth`;
@@ -31,11 +32,14 @@ export const register = async (
     signUpFormRef.current?.setErrors(resData.msg);
     return;
   } else {
+    toast('Registration successful!', {
+      type: 'success',
+    });
     navigate('/login');
     await new Promise((resolve) => setTimeout(resolve, 500));
   }
 
-  // console.log(resData);
+  console.log(resData);
 };
 
 export const login = async (
@@ -62,6 +66,9 @@ export const login = async (
     signUpFormRef.current?.setErrors(resData.msg);
     return;
   } else {
+    toast('Login successful!', {
+      type: 'success',
+    });
     navigate('/dashboard');
     await new Promise((resolve) => setTimeout(resolve, 500));
   }
@@ -69,30 +76,15 @@ export const login = async (
   // console.log(resData);
 };
 
-// export const logout = async (navigate: (path: string) => void) => {
-//   const res = await fetch(`${authUrl}/logout`, {
-//     method: 'GET',
-//   });
-
-//   const resData = await res.json();
-
-//   if (resData.status === 'success') {
-//     navigate('/login');
-//     await new Promise((resolve) => setTimeout(resolve, 500));
-//   } else {
-//     console.log('Error', resData.msg);
-//   }
-
-//   console.log(resData);
-// };
-
 export const logout = async (navigate: (path: string) => void) => {
   const res = await fetch(`${authUrl}/logout`, {
     method: 'GET',
   });
 
   if (res.status === 200) {
-    console.log('Se logro!');
+    toast('Logged out successfuly!', {
+      type: 'success',
+    });
     navigate('/login');
     await new Promise((resolve) => setTimeout(resolve, 500));
   } else {
