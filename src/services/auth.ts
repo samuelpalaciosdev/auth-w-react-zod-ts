@@ -1,32 +1,38 @@
-// const baseUrl = 'https://gold-wide-eyed-sparrow.cyclic.app/';
-// const authUrl = `${baseUrl}/api/auth`;
+import { SignUpAPI } from '../components/SignUpForm';
+import { SignUpType } from '../types/auth';
 
-// import { useRef } from 'react';
-// import { SignUpType } from '../types/auth';
+const baseUrl = 'https://ecommerce-api-ts.cyclic.app/api';
+const authUrl = `${baseUrl}/auth`;
 
-// export const register = async (data: SignUpType) => {
-//   const signUpFormRef = useRef(null);
+export const register = async (
+  data: SignUpType,
+  signUpFormRef: React.RefObject<SignUpAPI>,
+  navigate: (path: string) => void
+) => {
+  // console.log('Handled submit yesss!!', data);
+  const res = await fetch(`${authUrl}/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: data.name,
+      lastName: data.lastName,
+      email: data.email,
+      password: data.password,
+    }),
+  });
 
-//   console.log('Handled submit yesss!!', data);
-//   const res = await fetch(`${authUrl}/register`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({
-//       name: data.name,
-//       lastName: data.lastName,
-//       email: data.email,
-//       password: data.password,
-//     }),
-//   });
+  const resData = await res.json();
 
-//   const resData = await res.json();
+  if (resData.status !== 'success') {
+    // console.log('Error in register', resData.msg);
+    signUpFormRef.current?.setErrors(resData.msg);
+    return;
+  } else {
+    navigate('/login');
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  }
 
-//   if (!resData.success) {
-//     console.log('Error in register', resData);
-//     // signUpFormRef.current.setErrors();
-//   }
-
-//   console.log(resData);
-// };
+  // console.log(resData);
+};

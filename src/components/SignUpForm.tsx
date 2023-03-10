@@ -35,7 +35,7 @@ const SignUpForm = forwardRef<SignUpAPI, SignUpFormProps>(({ onSubmit }, ref) =>
         setErrors: (msg: Record<string, string>) => {
           const message = msg.toString();
           const key = message.split(' ')[0].toLowerCase();
-          console.log(message, key);
+          // console.log(message, key);
           setErrorRef.current(
             key as 'name' | 'lastName' | 'email' | 'password' | 'confirmPassword' | 'role',
             {
