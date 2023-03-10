@@ -26,3 +26,10 @@ export const signUpSchema = z
   );
 
 export type SignUpType = z.infer<typeof signUpSchema>;
+
+export const loginSchema = z.object({
+  email: z.string().email({ message: 'Please provide email' }),
+  password: z.string().min(8, { message: 'Please provide valid password' }),
+});
+
+export type LoginType = z.infer<typeof loginSchema>;

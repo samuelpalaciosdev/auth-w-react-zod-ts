@@ -1,5 +1,6 @@
+import { LoginAPI } from '../components/LoginForm';
 import { SignUpAPI } from '../components/SignUpForm';
-import { SignUpType } from '../types/auth';
+import { LoginType, SignUpType } from '../types/auth';
 
 const baseUrl = 'https://ecommerce-api-ts.cyclic.app/api';
 const authUrl = `${baseUrl}/auth`;
@@ -35,4 +36,48 @@ export const register = async (
   }
 
   // console.log(resData);
+};
+
+export const login = async (
+  data: LoginType,
+  signUpFormRef: React.RefObject<LoginAPI>,
+  navigate: (path: string) => void
+) => {
+  // console.log('Handled submit yesss!!', data);
+  const res = await fetch(`${authUrl}/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: data.email,
+      password: data.password,
+    }),
+  });
+
+  const resData = await res.json();
+
+  if (resData.status !== 'success') {
+    // console.log('Error in login', resData.msg);
+    signUpFormRef.current?.setErrors(resData.msg);
+    return;
+  } else {
+    navigate('/dashboard');
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  }
+
+  // console.log(resData);
+};
+
+export const logout = async (navigate: (path: string) => void) => {
+  const res = await fetch(`${authUrl}/logout`);
+
+  const resData = await res.json();
+
+  if (resData.status === 'success') {
+    navigate('/login');
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  }
+
+  console.log(resData);
 };

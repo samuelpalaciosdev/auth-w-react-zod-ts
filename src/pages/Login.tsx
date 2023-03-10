@@ -1,10 +1,21 @@
-import LoginForm from '../components/LoginForm';
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import LoginForm, { LoginAPI } from '../components/LoginForm';
+import { login } from '../services/auth';
+import { LoginType } from '../types/auth';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const loginFormRef = useRef<LoginAPI>(null);
+
+  const handleLogin = async (data: LoginType) => {
+    await login(data, loginFormRef, navigate);
+  };
+
   return (
     <>
       <h1 className='text-3xl'>Login page :D</h1>
-      <LoginForm />
+      <LoginForm ref={loginFormRef} onSubmit={handleLogin} />
     </>
   );
 };
