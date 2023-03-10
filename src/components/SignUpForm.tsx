@@ -1,33 +1,24 @@
-import { useCallback } from 'react';
-import { Button, Input } from 'react-daisyui';
-import { useForm, Resolver } from 'react-hook-form';
+import { Button } from 'react-daisyui';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import signUpSchema from '../types/auth';
+import { SignUpType, signUpSchema } from '../types/auth';
 import InputField from './InputField';
 
-type FormValues = {
-  name: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
+interface SignUpFormProps {
+  onSubmit: (data: SignUpType) => void;
+}
 
-const SignUpForm = () => {
+const SignUpForm = ({ onSubmit }: SignUpFormProps) => {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({
+  } = useForm<SignUpType>({
     resolver: zodResolver(signUpSchema),
   });
 
-  const onSubmit = useCallback((data: unknown) => {
-    console.log(`Submitted!`, data);
-  }, []);
-
-  console.log(errors);
+  // console.log(errors);
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>

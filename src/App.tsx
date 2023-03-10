@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import SignUpForm from './components/SignUpForm';
 import './App.css';
+import SignUp from './pages/SignUp';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -8,7 +8,7 @@ function App() {
   return (
     <div className='App'>
       <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-      <SignUpForm />
+      <SignUp />
     </div>
   );
 }

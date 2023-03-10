@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const signUpSchema = z
+export const signUpSchema = z
   .object({
     name: z
       .string()
@@ -11,8 +11,8 @@ const signUpSchema = z
       .min(1, { message: 'Please provide last name' })
       .max(35, { message: 'Last name must be less than 35 characters' }),
     email: z.string().email({ message: 'Please provide email' }),
-    password: z.string().min(8, { message: 'Please provide a valid password' }),
-    confirmPassword: z.string().min(8, { message: 'Please provide a valid password' }),
+    password: z.string().min(8, { message: 'Password must have minimum 8 characters' }),
+    confirmPassword: z.string().min(8, { message: 'Password must have minimum 8 characters' }),
     role: z.enum(['client', 'admin', 'superAdmin']).optional(),
   })
   .refine(
@@ -25,4 +25,4 @@ const signUpSchema = z
     }
   );
 
-export default signUpSchema;
+export type SignUpType = z.infer<typeof signUpSchema>;
