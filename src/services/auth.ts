@@ -69,15 +69,33 @@ export const login = async (
   // console.log(resData);
 };
 
+// export const logout = async (navigate: (path: string) => void) => {
+//   const res = await fetch(`${authUrl}/logout`, {
+//     method: 'GET',
+//   });
+
+//   const resData = await res.json();
+
+//   if (resData.status === 'success') {
+//     navigate('/login');
+//     await new Promise((resolve) => setTimeout(resolve, 500));
+//   } else {
+//     console.log('Error', resData.msg);
+//   }
+
+//   console.log(resData);
+// };
+
 export const logout = async (navigate: (path: string) => void) => {
-  const res = await fetch(`${authUrl}/logout`);
+  const res = await fetch(`${authUrl}/logout`, {
+    method: 'GET',
+  });
 
-  const resData = await res.json();
-
-  if (resData.status === 'success') {
+  if (res.status === 200) {
+    console.log('Se logro!');
     navigate('/login');
     await new Promise((resolve) => setTimeout(resolve, 500));
+  } else {
+    console.log('Error', res.statusText);
   }
-
-  console.log(resData);
 };
