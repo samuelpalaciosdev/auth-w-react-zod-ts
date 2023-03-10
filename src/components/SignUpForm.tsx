@@ -91,7 +91,7 @@ const SignUpForm = forwardRef<SignUpAPI, SignUpFormProps>(({ onSubmit }, ref) =>
           error={errors.confirmPassword?.message as string}
         />
 
-        <div className='submit-btn'>
+        <div className='submit-btn mt-4'>
           <Button type='submit' color='primary'>
             {isSubmitting ? 'Hold up' : ' Submit :)'}
           </Button>

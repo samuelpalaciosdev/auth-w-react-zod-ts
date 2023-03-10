@@ -11,7 +11,8 @@ const Dashboard = () => {
 
   return (
     <>
-      <h1 className='text-3xl font-bold underline'>Dashboard :)</h1>
+      <h1 className='text-3xl font-bold'>Dashboard :)</h1>
+
       <div className='submit-btn mt-4'>
         <Button onClick={handleLogout} color='primary'>
           Logout

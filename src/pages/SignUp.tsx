@@ -14,7 +14,7 @@ const SignUp = () => {
 
   return (
     <>
-      <h1 className='text-3xl font-bold underline'>Hello world!</h1>
+      <h1 className='text-3xl font-bold'>Register :)</h1>
       <SignUpForm ref={signUpFormRef} onSubmit={handleRegister} />
     </>
   );
