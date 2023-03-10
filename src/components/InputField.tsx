@@ -1,12 +1,25 @@
 import { Input } from 'react-daisyui';
+import { RefCallBack } from 'react-hook-form';
 
 interface InputFieldProps {
   id?: string;
   label: string;
-  type?: string;
+  type?: 'password' | 'text' | 'email';
   placeholder?: string;
   error?: string;
-  inputProps?: unknown;
+  inputProps?: {
+    onChange?: (e: any) => unknown;
+    onBlur?: (e: any) => unknown;
+    ref?: RefCallBack;
+    name?: string;
+    min?: string | number;
+    max?: string | number;
+    maxLength?: number;
+    minLength?: number;
+    pattern?: string;
+    required?: boolean;
+    disabled?: boolean;
+  };
 }
 
 const InputField = ({ id, label, type, error, inputProps, placeholder }: InputFieldProps) => {
@@ -18,12 +31,11 @@ const InputField = ({ id, label, type, error, inputProps, placeholder }: InputFi
       <Input
         type={type ?? 'text'}
         id={id}
-        size='md'
         color='ghost'
         placeholder={placeholder}
         {...(inputProps ?? {})}
       />
-      {error && <p className='text-red-500'>{error}</p>}
+      {error && <span className='label-text text-error'>{error}</span>}
     </div>
   );
 };
