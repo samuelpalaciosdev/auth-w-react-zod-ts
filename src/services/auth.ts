@@ -71,10 +71,16 @@ export const login = async (
     });
     navigate('/dashboard');
     await new Promise((resolve) => setTimeout(resolve, 500));
+    console.log(resData);
+    return resData;
   }
 
   // console.log(resData);
 };
+
+// export const loginData = () => {
+//   return useMutation()
+// }
 
 export const logout = async (navigate: (path: string) => void) => {
   const res = await fetch(`${authUrl}/logout`, {

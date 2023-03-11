@@ -1,3 +1,4 @@
+import { useMutation } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginForm, { LoginAPI } from '../components/LoginForm';
@@ -8,8 +9,14 @@ const Login = () => {
   const navigate = useNavigate();
   const loginFormRef = useRef<LoginAPI>(null);
 
+  const loginMutation = useMutation((data: LoginType) => login(data, loginFormRef, navigate), {
+    onSuccess: (data) => {
+      console.log(data); // handle the data returned by the mutation
+    },
+  });
+
   const handleLogin = async (data: LoginType) => {
-    await login(data, loginFormRef, navigate);
+    await loginMutation.mutateAsync(data);
   };
 
   return (
