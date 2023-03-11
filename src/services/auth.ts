@@ -3,7 +3,7 @@ import { SignUpAPI } from '../components/SignUpForm';
 import { LoginType, SignUpType } from '../types/auth';
 import { toast } from 'react-toastify';
 
-const baseUrl = 'https://ecommerce-api-ts.cyclic.app/api';
+const baseUrl = '/api';
 const authUrl = `${baseUrl}/auth`;
 
 export const register = async (
