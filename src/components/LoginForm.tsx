@@ -7,13 +7,14 @@ import { forwardRef, useImperativeHandle, useRef } from 'react';
 
 interface LoginFormProps {
   onSubmit: (data: LoginType) => Promise<void>;
+  isLoading: boolean;
 }
 
 export interface LoginAPI {
   setErrors: (msg: Record<string, string>) => void;
 }
 
-const LoginForm = forwardRef<LoginAPI, LoginFormProps>(({ onSubmit }, ref) => {
+const LoginForm = forwardRef<LoginAPI, LoginFormProps>(({ onSubmit, isLoading }, ref) => {
   const {
     register,
     handleSubmit,
@@ -72,8 +73,13 @@ const LoginForm = forwardRef<LoginAPI, LoginFormProps>(({ onSubmit }, ref) => {
           error={errors.password?.message as string}
         />
         <div className='submit-btn mt-4'>
-          <Button type='submit' color='accent' style={{ textTransform: 'initial' }}>
-            {isSubmitting ? 'Hold up' : 'Sign in'}
+          <Button
+            type='submit'
+            color='accent'
+            style={{ textTransform: 'initial' }}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Hold up' : 'Sign in'}
           </Button>
         </div>
       </form>

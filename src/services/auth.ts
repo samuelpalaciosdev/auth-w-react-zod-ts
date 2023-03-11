@@ -2,6 +2,7 @@ import { LoginAPI } from '../components/LoginForm';
 import { SignUpAPI } from '../components/SignUpForm';
 import { LoginType, SignUpType } from '../types/auth';
 import { toast } from 'react-toastify';
+import { useMutation } from '@tanstack/react-query';
 
 export const register = async (
   data: SignUpType,
@@ -63,9 +64,9 @@ export const login = async (
     signUpFormRef.current?.setErrors(resData.msg);
     return;
   } else {
-    toast('Login successful!', {
-      type: 'success',
-    });
+    // toast('Login successful!', {
+    //   type: 'success',
+    // });
     navigate('/dashboard');
     await new Promise((resolve) => setTimeout(resolve, 500));
     console.log(resData);
@@ -74,6 +75,30 @@ export const login = async (
 
   // console.log(resData);
 };
+
+export const useLoginMutation = (
+  signUpFormRef: React.RefObject<LoginAPI>,
+  navigate: (path: string) => void,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) =>
+  useMutation(async (data: LoginType) => login(data, signUpFormRef, navigate), {
+    onSuccess: (data) => {
+      const loggedInUser = data.user;
+      console.log(loggedInUser);
+      setIsLoading(false);
+      toast('Login successful!', {
+        type: 'success',
+      });
+      navigate('/dashboard');
+      setTimeout(() => {
+        console.log(data);
+      }, 500);
+    },
+    onError: (error) => {
+      console.log(error);
+      setIsLoading(false);
+    },
+  });
 
 // export const loginData = () => {
 //   return useMutation()
