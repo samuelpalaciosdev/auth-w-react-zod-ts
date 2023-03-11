@@ -3,16 +3,13 @@ import { SignUpAPI } from '../components/SignUpForm';
 import { LoginType, SignUpType } from '../types/auth';
 import { toast } from 'react-toastify';
 
-const baseUrl = 'http://localhost:5000/api';
-const authUrl = `${baseUrl}/auth`;
-
 export const register = async (
   data: SignUpType,
   signUpFormRef: React.RefObject<SignUpAPI>,
   navigate: (path: string) => void
 ) => {
   // console.log('Handled submit yesss!!', data);
-  const res = await fetch(`${authUrl}/register`, {
+  const res = await fetch(`api/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -48,7 +45,7 @@ export const login = async (
   navigate: (path: string) => void
 ) => {
   // console.log('Handled submit yesss!!', data);
-  const res = await fetch(`${authUrl}/login`, {
+  const res = await fetch(`api/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -83,7 +80,7 @@ export const login = async (
 // }
 
 export const logout = async (navigate: (path: string) => void) => {
-  const res = await fetch(`${authUrl}/logout`, {
+  const res = await fetch(`api/auth/logout`, {
     method: 'GET',
   });
 
