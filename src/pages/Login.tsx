@@ -11,7 +11,8 @@ const Login = () => {
 
   const loginMutation = useMutation((data: LoginType) => login(data, loginFormRef, navigate), {
     onSuccess: (data) => {
-      console.log(data); // handle the data returned by the mutation
+      const loggedInUser = data.user;
+      console.log(loggedInUser);
     },
   });
 
