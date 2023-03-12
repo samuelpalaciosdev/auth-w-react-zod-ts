@@ -3,6 +3,10 @@ import { SignUpAPI } from '../components/SignUpForm';
 import { LoginType, SignUpType } from '../types/auth';
 import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
+import { useAppStore } from '../store/store';
+
+const appStore = useAppStore.getState();
+const { setUser, setIsLoggedIn, logoutUser } = appStore;
 
 export const register = async (
   data: SignUpType,
@@ -64,12 +68,8 @@ export const login = async (
     signUpFormRef.current?.setErrors(resData.msg);
     return;
   } else {
-    // toast('Login successful!', {
-    //   type: 'success',
-    // });
-    navigate('/dashboard');
     await new Promise((resolve) => setTimeout(resolve, 500));
-    console.log(resData);
+    // console.log(resData);
     return resData;
   }
 
@@ -83,26 +83,21 @@ export const useLoginMutation = (
 ) =>
   useMutation(async (data: LoginType) => login(data, signUpFormRef, navigate), {
     onSuccess: (data) => {
-      const loggedInUser = data.user;
-      console.log(loggedInUser);
+      // console.log(data.user);
+      setUser(data.user);
+      setIsLoggedIn(true);
+      navigate('/dashboard');
+
       setIsLoading(false);
       toast('Login successful!', {
         type: 'success',
       });
-      navigate('/dashboard');
-      setTimeout(() => {
-        console.log(data);
-      }, 500);
     },
     onError: (error) => {
       console.log(error);
       setIsLoading(false);
     },
   });
-
-// export const loginData = () => {
-//   return useMutation()
-// }
 
 export const logout = async (navigate: (path: string) => void) => {
   const res = await fetch(`api/auth/logout`, {
@@ -113,6 +108,7 @@ export const logout = async (navigate: (path: string) => void) => {
     toast('Logged out successfuly!', {
       type: 'success',
     });
+    logoutUser();
     navigate('/login');
     await new Promise((resolve) => setTimeout(resolve, 500));
   } else {

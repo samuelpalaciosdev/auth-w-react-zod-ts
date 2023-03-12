@@ -1,8 +1,7 @@
-import { useMutation } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginForm, { LoginAPI } from '../components/LoginForm';
-import { login, useLoginMutation } from '../services/auth';
+import { useLoginMutation } from '../services/auth';
 import { LoginType } from '../types/auth';
 
 const Login = () => {
