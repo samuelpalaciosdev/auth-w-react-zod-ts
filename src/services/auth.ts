@@ -16,7 +16,7 @@ export const register = async (
   navigate: (path: string) => void
 ) => {
   // console.log('Handled submit yesss!!', data);
-  const res = await fetch(`${baseUrl}/auth/register`, {
+  const res = await fetch(`api/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export const login = async (
   navigate: (path: string) => void
 ) => {
   // console.log('Handled submit yesss!!', data);
-  const res = await fetch(`${baseUrl}/auth/login`, {
+  const res = await fetch(`api/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -61,6 +61,7 @@ export const login = async (
       email: data.email,
       password: data.password,
     }),
+    credentials: 'include',
   });
 
   const resData = await res.json();
@@ -102,18 +103,21 @@ export const useLoginMutation = (
   });
 
 export const logout = async (navigate: (path: string) => void) => {
-  const res = await fetch(`${baseUrl}/auth/logout`, {
+  // Delete refresh token from server
+  const res = await fetch(`api/auth/logout`, {
     method: 'DELETE',
+    credentials: 'include',
   });
 
   if (res.status === 200) {
-    toast('Logged out successfuly!', {
-      type: 'success',
-    });
-    logoutUser();
+    // Clear cookies and local storage
+    localStorage.removeItem('user');
+    // Update state and navigate to login page
     setIsLoggedIn(false);
     navigate('/login');
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    toast('Logged out successfully!', {
+      type: 'success',
+    });
   } else {
     console.log('Error', res.statusText);
   }
