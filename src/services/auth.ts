@@ -16,7 +16,7 @@ export const register = async (
   navigate: (path: string) => void
 ) => {
   // console.log('Handled submit yesss!!', data);
-  const res = await fetch(`api/auth/register`, {
+  const res = await fetch(`${baseUrl}/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export const login = async (
   navigate: (path: string) => void
 ) => {
   // console.log('Handled submit yesss!!', data);
-  const res = await fetch(`api/auth/login`, {
+  const res = await fetch(`${baseUrl}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ export const useLoginMutation = (
 
 export const logout = async (navigate: (path: string) => void) => {
   // Delete refresh token from server
-  const res = await fetch(`api/auth/logout`, {
+  const res = await fetch(`${baseUrl}/auth/logout`, {
     method: 'DELETE',
     credentials: 'include',
   });
