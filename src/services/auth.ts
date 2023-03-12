@@ -41,7 +41,7 @@ export const register = async (
     await new Promise((resolve) => setTimeout(resolve, 500));
   }
 
-  console.log(resData);
+  // console.log(resData);
 };
 
 export const login = async (
@@ -94,14 +94,14 @@ export const useLoginMutation = (
       });
     },
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
       setIsLoading(false);
     },
   });
 
 export const logout = async (navigate: (path: string) => void) => {
   const res = await fetch(`api/auth/logout`, {
-    method: 'GET',
+    method: 'DELETE',
   });
 
   if (res.status === 200) {
@@ -109,6 +109,7 @@ export const logout = async (navigate: (path: string) => void) => {
       type: 'success',
     });
     logoutUser();
+    setIsLoggedIn(false);
     navigate('/login');
     await new Promise((resolve) => setTimeout(resolve, 500));
   } else {

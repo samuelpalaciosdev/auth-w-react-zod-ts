@@ -52,7 +52,7 @@ const LoginForm = forwardRef<LoginAPI, LoginFormProps>(({ onSubmit, isLoading },
     []
   );
 
-  console.log(errors);
+  // console.log(errors);
 
   return (
     <>

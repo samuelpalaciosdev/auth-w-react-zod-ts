@@ -22,24 +22,6 @@ const initialUserState: User = {
 const clearSessionStorage = () => {
   sessionStorage.removeItem('user');
 };
-// <AppState>
-// export const useAppStore = create(
-//   persist(
-
-//   )
-//   devtools((set) => ({
-//     user: localStorage.getItem('user')
-//       ? JSON.parse(localStorage.getItem('user') as string)
-//       : initialUserState,
-//     isLoggedIn: false,
-//     setUser: (user: User) => set(() => ({ user })),
-//     setIsLoggedIn: (isLoggedIn: boolean) => set(() => ({ isLoggedIn })),
-//     logoutUser: () => {
-//       clearSessionStorage();
-//       set(() => ({ user: initialUserState }));
-//     },
-//   }))
-// );
 
 export const useAppStore = create(
   persist(
