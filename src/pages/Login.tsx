@@ -1,10 +1,11 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import LoginForm, { LoginAPI } from '../components/LoginForm';
 import { useLoginMutation } from '../services/auth';
 import { PublicRoutes } from '../types';
 import { LoginType } from '../types/auth';
+import { useAppStore } from '../store/store';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,6 +18,12 @@ const Login = () => {
     setIsLoading(true);
     await loginMutation.mutateAsync(data);
   };
+
+  const logoutUser = useAppStore((state) => state.logoutUser);
+
+  useEffect(() => {
+    logoutUser();
+  }, []);
 
   return (
     <>

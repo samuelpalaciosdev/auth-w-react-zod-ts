@@ -15,7 +15,6 @@ const initialUserState: User = {
   name: '',
   lastName: '',
   email: '',
-  password: '',
   isActive: false,
   role: 'client',
 };
