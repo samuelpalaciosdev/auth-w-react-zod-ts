@@ -115,10 +115,9 @@ export const getCurrentUser = async () => {
 
   if (data.status !== 'success') {
     console.log('Error getting current user', data.msg);
-    return;
+    // return;
   } else {
     console.log('Current user is: ', data.user);
-    // console.log('Response status', res.status);
     return data;
   }
 };
