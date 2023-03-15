@@ -10,17 +10,17 @@ interface AppState {
   logoutUser: () => void;
 }
 
-const initialUserState = {
-  user: null,
-};
-// const initialUserState: User = {
-//   id: '',
-//   name: '',
-//   lastName: '',
-//   email: '',
-//   isActive: false,
-//   role: 'client',
+// const initialUserState = {
+//   user: null,
 // };
+const initialUserState: User = {
+  id: '',
+  name: '',
+  lastName: '',
+  email: '',
+  isActive: false,
+  role: 'client',
+};
 
 const clearSessionStorage = () => {
   sessionStorage.removeItem('user');

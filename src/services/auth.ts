@@ -85,22 +85,43 @@ export const useLoginMutation = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) =>
   useMutation(async (data: LoginType) => login(data, signUpFormRef, navigate), {
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       // console.log(data.user);
-      setUser(data.user);
       setIsLoggedIn(true);
-      navigate('/dashboard');
-
-      setIsLoading(false);
-      toast('Login successful!', {
-        type: 'success',
-      });
+      const currentUser = await getCurrentUser();
+      // * If user found, then set the userState and go to dashboard
+      if (currentUser) {
+        setUser(data.user);
+        navigate('/dashboard');
+        toast('Login successful!', {
+          type: 'success',
+        });
+      } else {
+        setIsLoading(false);
+      }
     },
     onError: (error) => {
-      // console.log(error);
       setIsLoading(false);
     },
   });
+
+export const getCurrentUser = async () => {
+  const res = await fetch(`${baseUrl}/users/me`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  const data = await res.json();
+
+  if (data.status !== 'success') {
+    console.log('Error getting current user', data.msg);
+    return;
+  } else {
+    console.log('Current user is: ', data.user);
+    // console.log('Response status', res.status);
+    return data;
+  }
+};
 
 export const generateNewRefreshToken = async () => {
   const res = await fetch(`${baseUrl}/auth/refresh`, {
@@ -108,14 +129,14 @@ export const generateNewRefreshToken = async () => {
     credentials: 'include',
   });
 
-  const resData = await res.json();
+  const data = await res.json();
 
-  if (resData.status !== 'success') {
-    console.log('Error in generateRefreshToken', resData.msg);
+  if (data.status !== 'success') {
+    console.log('Error in generateRefreshToken', data.msg);
     return;
   } else {
-    // console.log(resData);
-    return resData;
+    // console.log(data);
+    return data;
   }
 };
 
