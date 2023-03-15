@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 import { useAppStore } from '../store/store';
 
-const baseUrl = 'https://ecommerce-api-ts.cyclic.app/api';
+const baseUrl = 'https://ecommerce-api-ts-zod-express.cyclic.app/api';
 
 const appStore = useAppStore.getState();
 const { setUser, setIsLoggedIn, logoutUser } = appStore;
@@ -101,6 +101,23 @@ export const useLoginMutation = (
       setIsLoading(false);
     },
   });
+
+export const generateNewRefreshToken = async () => {
+  const res = await fetch(`${baseUrl}/auth/refresh`, {
+    method: 'POST',
+    credentials: 'include',
+  });
+
+  const resData = await res.json();
+
+  if (resData.status !== 'success') {
+    console.log('Error in generateRefreshToken', resData.msg);
+    return;
+  } else {
+    // console.log(resData);
+    return resData;
+  }
+};
 
 export const logout = async (navigate: (path: string) => void) => {
   // Delete refresh token from server
